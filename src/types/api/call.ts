@@ -1,3 +1,13 @@
+export enum ECallDirection {
+  INBOUND = "inbound",
+  OUTBOUND = "outbound"
+}
+export enum ECallType {
+  ANSWERED = "answered",
+  MISSED = "missed",
+  VOICEMAIL = "voicemail"
+}
+
 export type TCall = {
   "direction": TCallDirection,
   "from": number,
@@ -7,7 +17,7 @@ export type TCall = {
   "is_archived": boolean,
   "call_type": TCallType,
   "id": string,
-  "created_at": Date
+  "created_at": string
 }
-type TCallDirection = "inbound" | "outbound";
-type TCallType = "answered" | "missed" | "voicemail";
+export type TCallDirection = ECallDirection;
+export type TCallType = ECallType;
