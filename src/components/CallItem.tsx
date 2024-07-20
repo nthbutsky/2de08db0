@@ -1,5 +1,3 @@
-import clsx from "clsx";
-
 import dayjs from "dayjs";
 
 import {
@@ -13,6 +11,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { faInfo } from "@fortawesome/free-solid-svg-icons";
+
+import { Badge } from "@/components/Badge";
 
 type TProps = {
   direction: TCallDirection;
@@ -54,22 +54,8 @@ export const CallItem = ({
           {direction === ECallDirection.INBOUND ? to : from}
         </h3>
         <div className="flex gap-2">
-          <div className="inline-flex items-center rounded-full bg-purple-100 px-2 py-1 text-xs font-medium text-purple-600">
-            {direction}
-          </div>
-          <div
-            className={clsx(
-              "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium",
-              {
-                "bg-green-100 text-green-600": call_type === ECallType.ANSWERED,
-                "bg-red-100 text-red-600": call_type === ECallType.MISSED,
-                "bg-yellow-100 text-yellow-600":
-                  call_type === ECallType.VOICEMAIL,
-              },
-            )}
-          >
-            {call_type}
-          </div>
+          {direction && <Badge text={direction} type={direction} />}
+          {call_type && <Badge text={call_type} type={call_type} />}
         </div>
       </div>
 
