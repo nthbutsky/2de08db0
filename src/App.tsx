@@ -1,10 +1,10 @@
-import ActivityFeed from "@/components/ActivityFeed";
-import Layout from "@/components/Layout";
+import { ActivityFeed } from "@/components/ActivityFeed";
+import { Layout } from "@/components/Layout";
 
-export default function App() {
+export const App = () => {
   return (
     <Layout title="Aircall">
       <ActivityFeed />
     </Layout>
   );
-}
+};
