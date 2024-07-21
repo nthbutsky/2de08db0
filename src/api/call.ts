@@ -1,6 +1,6 @@
 import {
   TCall,
-} from '@/types/api/call';
+} from '@/types/call';
 import {
   apiHttpClient,
 } from '@/api/api-http-client';

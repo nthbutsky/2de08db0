@@ -1,13 +1,8 @@
 import { useEffect, useState } from "react";
 
-import { ETab, TTab } from "@/types/tab";
+import { ETab, TTab, TTabItemLength } from "@/types/tab";
 
 import { TabList } from "@/components/TabList";
-
-export type TTabItemLength = {
-  all: number;
-  archived: number;
-};
 
 type TProps = {
   children: React.ReactNode;

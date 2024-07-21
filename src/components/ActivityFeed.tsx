@@ -26,21 +26,28 @@ export const ActivityFeed = ({ feedList, onArchiveCall, filter }: TProps) => {
     setCallItemDetailOpen(true);
   };
 
+  const filteredList = feedList
+    .filter((item) =>
+      filter === ETab.ALL ? !item.is_archived : item.is_archived,
+    )
+    .sort(
+      (a, b) => dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf(),
+    );
+
   return (
     <>
       <ul
         role="list"
         className="no-scrollbar max-h-[520px] cursor-default divide-y divide-gray-100 overflow-auto"
       >
-        {feedList
-          .filter((item) =>
-            filter === ETab.ALL ? !item.is_archived : item.is_archived,
-          )
-          .sort(
-            (a, b) =>
-              dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf(),
-          )
-          .map((item) => (
+        {filteredList.length === 0 && filter === ETab.ALL ? (
+          <li className="px-2 py-1 text-center text-gray-500">All archived</li>
+        ) : filteredList.length === 0 && filter === ETab.ARCHIVED ? (
+          <li className="px-2 py-1 text-center text-gray-500">
+            No archived calls
+          </li>
+        ) : (
+          filteredList.map((item) => (
             <li key={item.id} className="px-2 py-1">
               <CallItem
                 direction={item.direction}
@@ -54,7 +61,8 @@ export const ActivityFeed = ({ feedList, onArchiveCall, filter }: TProps) => {
                 }}
               />
             </li>
-          ))}
+          ))
+        )}
       </ul>
 
       <Modal

@@ -9,3 +9,8 @@ export type TTab = {
   count: number;
   current: boolean;
 };
+
+export type TTabItemLength = {
+  all: number;
+  archived: number;
+};
