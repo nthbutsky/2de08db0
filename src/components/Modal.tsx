@@ -1,15 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-export const Modal = ({
-  isOpen,
-  onClose,
-  children,
-}: {
+type TProps = {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
-}) => {
+};
+
+export const Modal = ({ isOpen, onClose, children }: TProps) => {
   return (
     <>
       {isOpen && (

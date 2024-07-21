@@ -1,16 +1,12 @@
 import dayjs from "dayjs";
 
-import {
-  TCallDirection,
-  ECallDirection,
-  TCallType,
-  ECallType,
-} from "@/types/call";
+import { TCallDirection, ECallDirection, TCallType } from "@/types/call";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { faInfo } from "@fortawesome/free-solid-svg-icons";
+import { faBoxArchive } from "@fortawesome/free-solid-svg-icons";
 
 import { Badge } from "@/components/Badge";
 
@@ -21,6 +17,7 @@ type TProps = {
   call_type: TCallType;
   created_at: string;
   onOpen: () => void;
+  onArchive: () => void;
 };
 
 export const CallItem = ({
@@ -30,6 +27,7 @@ export const CallItem = ({
   call_type,
   created_at,
   onOpen,
+  onArchive,
 }: TProps) => {
   return (
     <div className="flex items-center gap-x-3">
@@ -60,10 +58,23 @@ export const CallItem = ({
       </div>
 
       <div className="flex items-center gap-2">
+        <button
+          title="Archive"
+          className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-100 hover:bg-gray-100"
+          type="button"
+          onClick={onArchive}
+        >
+          <FontAwesomeIcon
+            icon={faBoxArchive}
+            size="sm"
+            className="text-purple-500"
+          />
+        </button>
         <time dateTime={created_at} className="text-xs text-gray-500">
           {dayjs(created_at).format("YYYY-MM-DD")}
         </time>
         <button
+          title="Call Detail"
           className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-100 hover:bg-gray-100"
           type="button"
           onClick={onOpen}

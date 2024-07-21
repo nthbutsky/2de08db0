@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import dayjs from "dayjs";
 
 import { ECallDirection, ECallType, TCall } from "@/types/call";
-
-import { getAllCalls } from "@/api/call";
+import { ETab } from "@/types/tab";
 
 import { CallItem } from "@/components/CallItem";
 import { Modal } from "@/components/Modal";
@@ -12,25 +11,15 @@ import { Badge } from "@/components/Badge";
 
 import { useDurationFormat } from "@/utils/useDurationFormat";
 
-export const ActivityFeed = () => {
-  const [callList, setCallList] = useState<TCall[]>([]);
+type TProps = {
+  feedList: TCall[];
+  onArchiveCall: (item: TCall) => void;
+  filter: string;
+};
+
+export const ActivityFeed = ({ feedList, onArchiveCall, filter }: TProps) => {
   const [selectedCall, setSelectedCall] = useState<TCall | null>(null);
   const [callItemDetailOpen, setCallItemDetailOpen] = useState(false);
-
-  const getCallList = async () => {
-    try {
-      const response = await getAllCalls();
-
-      setCallList(response.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-    }
-  };
-
-  useEffect(() => {
-    getCallList();
-  }, []);
 
   const handleClickOnCallItem = (item: TCall) => {
     setSelectedCall(item);
@@ -43,7 +32,10 @@ export const ActivityFeed = () => {
         role="list"
         className="no-scrollbar max-h-[520px] cursor-default divide-y divide-gray-100 overflow-auto"
       >
-        {callList
+        {feedList
+          .filter((item) =>
+            filter === ETab.ALL ? !item.is_archived : item.is_archived,
+          )
           .sort(
             (a, b) =>
               dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf(),
@@ -57,6 +49,9 @@ export const ActivityFeed = () => {
                 call_type={item.call_type}
                 created_at={item.created_at}
                 onOpen={() => handleClickOnCallItem(item)}
+                onArchive={() => {
+                  onArchiveCall(item);
+                }}
               />
             </li>
           ))}
